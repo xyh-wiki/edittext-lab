@@ -10,15 +10,23 @@ import App from './App';
 import './styles/global.css';
 import { ThemeProvider } from './context/ThemeContext';
 import { I18nProvider } from './context/I18nContext';
+import { ToastProvider } from './hooks/useToast';
 
+/**
+ * 根节点挂载：
+ *  - 最外层使用 ToastProvider，保证全局任意组件都可以安全使用 useToast()
+ *  - 再包裹主题、国际化、路由等上下文
+ */
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <ThemeProvider>
-      <I18nProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </I18nProvider>
-    </ThemeProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <ToastProvider>
+            <ThemeProvider>
+                <I18nProvider>
+                    <BrowserRouter>
+                        <App />
+                    </BrowserRouter>
+                </I18nProvider>
+            </ThemeProvider>
+        </ToastProvider>
+    </React.StrictMode>
 );
