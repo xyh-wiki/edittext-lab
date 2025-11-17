@@ -1,9 +1,20 @@
-:{$PORT:80} {
-    root * {$PUBLIC_ROOT}
+# @Author:XYH
+# @Date:2025-11-17
+# @Description:
+#  使用 Caddy 作为静态站点服务器，并支持 SPA 前端路由。
+#  这里直接把 root 指向 /app/dist（Nixpacks 运行时代码所在目录）。
 
+:{$PORT:80} {
+
+    # Nixpacks 里代码工作目录是 /app，Vite 打包输出 dist 在 /app/dist
+    root * /app/dist
+
+    # 启用压缩
     encode gzip zstd
 
+    # SPA 路由关键：静态资源正常访问，其余路径全部回退到 index.html
     try_files {path} {path}/ /index.html
 
+    # 静态文件服务
     file_server
 }
