@@ -1,17 +1,16 @@
-# Caddy SPA 配置，适配 Nixpacks / Dokploy
-# 使用 $PORT 作为监听端口，$PUBLIC_ROOT 作为静态文件根目录
+# 根路径监听，端口使用 Nixpacks 注入的 $PORT
 :{$PORT:80} {
 
-    # 前端打包后的静态资源根目录（由 Nixpacks 注入）
+    # 静态文件根目录，由 Nixpacks 注入 PUBLIC_ROOT，一般是 dist
     root * {$PUBLIC_ROOT}
 
-    # 开启压缩
+    # 开启 gzip / zstd 压缩
     encode gzip zstd
 
     # 关键：SPA 路由兜底
     # 1. 先尝试按原始路径找静态文件
     # 2. 再尝试目录形式（/path/）
-    # 3. 如果都不存在，统一回退到 /index.html，由 React Router 处理
+    # 3. 如果都不存在，则回退到 /index.html，由前端路由接管
     try_files {path} {path}/ /index.html
 
     # 静态文件服务

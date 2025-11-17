@@ -42,17 +42,15 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [lang, setLang] = useState<LangType>('en');
 
   // 初始化时从 localStorage 或浏览器语言推断
+  /**
+   * 默认语言：固定为英文 en，不根据浏览器语言判断
+   */
   useEffect(() => {
     const saved = window.localStorage.getItem('edittext-lang') as LangType | null;
     if (saved && (saved === 'en' || saved === 'zh')) {
       setLang(saved);
-      return;
-    }
-    const browserLang = navigator.language.toLowerCase();
-    if (browserLang.startsWith('zh')) {
-      setLang('zh');
     } else {
-      setLang('en');
+      setLang('en'); // 默认英文
     }
   }, []);
 
