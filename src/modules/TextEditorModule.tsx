@@ -4,8 +4,8 @@
  * @Description: 首页主编辑器模块，包含文本输入区、工具栏以及统计信息展示
  */
 import React, { useEffect, useState } from 'react';
-import { countTextStats } from './TextTools';
-import { useToast } from '../../hooks/useToast';
+import { countTextStats } from './tools/TextTools';
+import { useToast } from '../hooks/useToast';
 
 const STORAGE_KEY = 'edittext-home-editor';
 
